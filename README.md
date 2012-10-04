@@ -8,6 +8,7 @@ Initially written for an upcoming JavaScript video game, the library was written
 See the Example/Demo.html for an example.
 
 Example configuration:
+<code>
 var eventMappings = {
 		death: {
 			file: 'snd/concreteDigital.mp3', 
@@ -37,3 +38,4 @@ var eventMappings = {
 			file: 'snd/WierdSpringer.mp3'
 		}
 	};
+	</code>
