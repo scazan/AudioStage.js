@@ -1,0 +1,56 @@
+
+
+
+var eventMappings = {
+		death: {
+			file: ['snd/crash17.mp3', 'snd/WierdSpringer.mp3',"snd/crash17.mp3"], 
+			loop: false,
+			vol: 0.5,
+			pan: [0.5,0.5,0.5],
+			poly: false
+		},
+		explosion: {
+			file: "snd/crash17.mp3", 
+			loop: false,
+			vol: 1,
+			pan: [0,1,1],
+			poly: false
+		},
+		laserFire: {
+			file: 'snd/WierdSpringer.mp3', 
+			loop: false,
+			vol: 1
+		},
+		noise: {
+			signalArray: function() {
+				//somefunc
+				//ie
+				var data = [];
+				var i = 0;
+				
+				while (i<100000) { 
+				  data[i++] = 128+Math.round(127*Math.sin(i/10)); // left speaker
+				  data[i++] = 128+Math.round(127*Math.sin(i/200)); // right speaker
+				}
+
+				//OR
+				for (var i=0; i<10000; i++) data[i] = Math.round(255 * Math.random());
+			} 
+		}
+	};
+
+
+X Needs to know which file to play
+	X Assumes if multiple files are given, they are for crossfading
+- Cumulative crossfading
+X Normal crossfading
+X Defaults. You should be able to omit parameters.
+X Looping vs not looping
+X default pan position can be set (in case you will not be providing panning information from control data)
+X Interfaces for controlling all parameters
+	X Splitting in the crossfades (dividing 0-1 by num of given files).
+X polyphonic option. Should this sound ever be triggered multiple times? or should it always wait until the last sound has ended.
+X Option to add effects with names
+- Crossbrowser implementation
+- Callback function for letting system know that stop has occurrred
+

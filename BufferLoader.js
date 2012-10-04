@@ -3,7 +3,7 @@ function BufferLoader(context, urlList, callback) {
   this.context = context;
   this.urlList = urlList;
   this.onload = callback;
-  this.bufferList = new Array();
+  this.bufferList = {};
   this.loadCount = 0;
 }
 
@@ -21,10 +21,14 @@ BufferLoader.prototype.loadBuffer = function(url, index) {
       request.response,
       function(buffer) {
         if (!buffer) {
-          alert('error decoding file data: ' + url);
+          console.debug('error decoding file data: ' + url);
           return;
         }
-        loader.bufferList[index] = buffer;
+
+        //Use the url as the key in the array.
+        loader.bufferList[url] = buffer;
+        // console.debug('BufferLoader: ' + loader.bufferList[url]);
+        
         if (++loader.loadCount == loader.urlList.length)
           loader.onload(loader.bufferList);
       }
@@ -40,6 +44,22 @@ BufferLoader.prototype.loadBuffer = function(url, index) {
 
 BufferLoader.prototype.load = function() {
 	for (var i = 0; i < this.urlList.length; ++i)
-		this.loadBuffer(this.urlList[i], i);
+  {
+    var path = this.urlList[i];
+    // Check if an array was passed in. If so, load each one in.
+    if( path instanceof Array)
+    {
+      for(var k = 0; k < path.length; ++k)
+      {
+        this.loadBuffer(path[k], i+k);
+        i = i+k;
+      }
+    }
+    else 
+    {
+      this.loadBuffer(path, i);
+    }
+		
+  }
 }
 // end BufferLoader Class
