@@ -14,7 +14,9 @@ var AudioStage = function() {
 	this.cues = {};
 
 	// Callback function for when all sounds have been loaded
-	this.ready;
+	this.ready = function() {
+		console.log('AudioStage ready!');
+	};
 }
 
 AudioStage.prototype.getNewMasterFader = function() {
